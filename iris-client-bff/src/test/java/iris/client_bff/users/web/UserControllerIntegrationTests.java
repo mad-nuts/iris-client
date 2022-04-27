@@ -15,9 +15,6 @@ import iris.client_bff.IrisWebIntegrationTest;
 import iris.client_bff.WithMockAdmin;
 import iris.client_bff.matchers.IsUuid;
 import iris.client_bff.users.UserAccountsRepositoryForTests;
-import iris.client_bff.users.web.dto.UserInsertDTO;
-import iris.client_bff.users.web.dto.UserRoleDTO;
-import iris.client_bff.users.web.dto.UserUpdateDTO;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
@@ -181,7 +178,7 @@ class UserControllerIntegrationTests {
 
 				.then()
 				.status(BAD_REQUEST)
-				.body("message", containsString("Validation failed for object='userInsertDTO'. Error count: 3"))
+				.body("message", containsString("Validation failed for object='insert'. Error count: 3"))
 				.body("errors.password[0]", containsString("must not be blank"),
 						violationChecks(
 								"role", "must not be null",
@@ -466,7 +463,7 @@ class UserControllerIntegrationTests {
 
 		var userName = createWord(wordLength);
 
-		var dto = new UserInsertDTO("fn", "ln", userName, "Password12A_", UserRoleDTO.USER, false);
+		var dto = new UserDtos.Insert("fn", "ln", userName, "Password12A_", UserDtos.Role.USER, false);
 
 		given()
 				.body(toJson(dto))
@@ -485,7 +482,7 @@ class UserControllerIntegrationTests {
 
 		var admin = users.findByUserName("admin");
 		var lastName = createWord(wordLength);
-		var dto = UserUpdateDTO.builder().lastName(lastName).build();
+		var dto = UserDtos.Update.builder().lastName(lastName).build();
 
 		given()
 				.body(toJson(dto))
