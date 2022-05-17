@@ -1,108 +1,29 @@
 <template>
   <div class="home">
+    <h2 class="light-font mb-6 text-center">
+      Herzlich willkommen bei IRIS connect - Die öffentliche Datenschnittstelle
+      des Gesundheitsamts
+    </h2>
     <v-row>
-      <v-col>
+      <v-col cols="6" offset="3">
         <counter-widget
-          subtitle="Ereignisse/Woche"
-          :count="statistics.eventsCount"
-          actionlabel="Zur Ereignisübersicht"
-          image="sketch_file_analysis.svg"
-          actionlink="events/list"
-          data-test="counter-widget.events"
-        ></counter-widget>
-      </v-col>
-      <v-col>
-        <counter-widget
-          subtitle="Indexfälle/Woche"
-          :count="statistics.indexCasesCount"
-          actionlabel="Zur Indexübersicht"
-          image="sketch_medicine.svg"
-          actionlink="cases/list"
-          data-test="counter-widget.index-cases"
-          :linkDisabled="
-            // @todo indexTracking: remove linkDisabled once index cases are permanently activated again
-            !$store.state.indexTrackingSettings.indexTrackingEnabled
-          "
-        ></counter-widget>
-      </v-col>
-      <v-col>
-        <counter-widget
-          subtitle="Statusänderungen"
-          :count="statistics.sumStatus"
-          actionlabel="Anzeigen"
+          subtitle="offene Schuleingangsuntersuchungen"
+          :count="5"
+          actionlabel="Zur Übersicht"
           image="sketch_reviewed_docs.svg"
-          data-test="counter-widget.status"
-          actionlink="events/list"
+          actionlink="school-entry-exam/list"
+        ></counter-widget>
+      </v-col>
+      <v-col cols="6" offset="3">
+        <counter-widget
+          subtitle="ungelesene Nachrichten"
+          :count="2"
+          actionlabel="Zum Postfach"
+          image="sketch_file_analysis.svg"
+          actionlink="iris-messages/list"
         ></counter-widget>
       </v-col>
     </v-row>
-
-    <v-row>
-      <v-col>
-        <v-card color="primary" class="pb-8 pt-2 pl-2">
-          <v-container>
-            <h2 class="light-font mb-6">
-              Herzlich willkommen bei IRIS connect - Die öffentliche
-              Datenschnittstelle des Gesundheitsamts
-            </h2>
-            <v-row>
-              <v-col>
-                <v-btn
-                  color="primary"
-                  :to="{ name: 'event-new' }"
-                  class="mt-5 mb-3"
-                  data-test="link.new-event"
-                  >Neue Ereignisverfolgung starten
-                </v-btn>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col>
-                <v-btn
-                  color="primary"
-                  :to="{ name: 'index-new' }"
-                  class="mb-5"
-                  data-test="link.new-index-case"
-                  :disabled="
-                    // @todo indexTracking: remove disabled once index cases are permanently activated again
-                    !$store.state.indexTrackingSettings.indexTrackingEnabled
-                  "
-                >
-                  Indexfall-Daten anfordern
-                </v-btn>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card>
-      </v-col>
-      <!--      <v-col>-->
-      <!--        <v-card class="pb-8 pl-2">-->
-      <!--          <v-container>-->
-      <!--            <h2 class="light-font mb-6">Ticket Tracker</h2>-->
-      <!--            <cases-pie-chart></cases-pie-chart>-->
-      <!--          </v-container>-->
-      <!--        </v-card>-->
-      <!--      </v-col>-->
-    </v-row>
-    <v-row>
-      <v-col>
-        <v-card>
-          <event-list :tableRowData="openEventListData"></event-list>
-        </v-card>
-      </v-col>
-    </v-row>
-    <v-row v-if="eventTrackingListError">
-      <v-col>
-        <v-alert text type="error">{{ eventTrackingListError }}</v-alert>
-      </v-col>
-    </v-row>
-    <!--    <v-row>-->
-    <!--      <v-col>-->
-    <!--        <v-card class="pb-3 pl-3 pt-3 pt-3">-->
-    <!--          <cases-bar-chart></cases-bar-chart>-->
-    <!--        </v-card>-->
-    <!--      </v-col>-->
-    <!--    </v-row>-->
   </div>
 </template>
 
