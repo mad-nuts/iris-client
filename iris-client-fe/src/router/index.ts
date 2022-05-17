@@ -88,83 +88,106 @@ export const routes: Array<RouteConfig> = [
         /* webpackChunkName: "admin-user-edit" */ "../views/admin-user-edit/admin-user-edit.view.vue"
       ),
   },
+  // {
+  //   path: "/checkin-app-status/list",
+  //   name: "checkin-app-status-list",
+  //   meta: {
+  //     menu: false,
+  //   },
+  //   component: () =>
+  //     import(
+  //       /* webpackChunkName: "checkin-app-status-list" */ "../views/checkin-app-status-list/checkin-app-status-list.view.vue"
+  //     ),
+  // },
+  // {
+  //   path: "/events/new",
+  //   name: "event-new",
+  //   meta: {
+  //     menu: false,
+  //   },
+  //   component: () =>
+  //     import(
+  //       /* webpackChunkName: "event-tracking-form" */ "../views/event-tracking-form/event-tracking-form.view.vue"
+  //     ),
+  // },
+  // {
+  //   path: "/cases/new",
+  //   name: "index-new" /* Caution: This acts as an identifier! */,
+  //   meta: {
+  //     menu: false,
+  //   },
+  //   component: () =>
+  //     import(
+  //       /* webpackChunkName: "index-tracking-form" */ "../views/index-tracking-form/index-tracking-form.view.vue"
+  //     ),
+  // },
+  // {
+  //   path: "/events/list",
+  //   name: "event-list" /* Caution: This acts as an identifier! */,
+  //   meta: {
+  //     menu: true,
+  //     menuName: "Ereignisse",
+  //   },
+  //   component: () =>
+  //     import(
+  //       /* webpackChunkName: "event-tracking-list" */ "../views/event-tracking-list/event-tracking-list.view.vue"
+  //     ),
+  // },
+  // {
+  //   path: "/cases/list",
+  //   name: "index-list" /* Caution: This acts as an identifier! */,
+  //   meta: {
+  //     menu: true,
+  //     menuName: "Indexfälle",
+  //   },
+  //   component: () =>
+  //     import(
+  //       /* webpackChunkName: "index-tracking-list" */ "../views/index-tracking-list/index-tracking-list.view.vue"
+  //     ),
+  // },
+  // {
+  //   path: "/events/details/:id",
+  //   name: "event-details" /* Caution: This acts as an identifier! */,
+  //   meta: {
+  //     menu: false,
+  //   },
+  //   component: () =>
+  //     import(
+  //       /* webpackChunkName: "event-tracking-details" */ "../views/event-tracking-details/event-tracking-details.view.vue"
+  //     ),
+  // },
+  // {
+  //   path: "/cases/details/:caseId",
+  //   name: "index-details" /* Caution: This acts as an identifier! */,
+  //   meta: {
+  //     menu: false,
+  //   },
+  //   component: () =>
+  //     import(
+  //       /* webpackChunkName: "index-tracking-details" */ "../views/index-tracking-details/index-tracking-details.view.vue"
+  //     ),
+  // },
   {
-    path: "/checkin-app-status/list",
-    name: "checkin-app-status-list",
-    meta: {
-      menu: false,
-    },
-    component: () =>
-      import(
-        /* webpackChunkName: "checkin-app-status-list" */ "../views/checkin-app-status-list/checkin-app-status-list.view.vue"
-      ),
-  },
-  {
-    path: "/events/new",
-    name: "event-new",
-    meta: {
-      menu: false,
-    },
-    component: () =>
-      import(
-        /* webpackChunkName: "event-tracking-form" */ "../views/event-tracking-form/event-tracking-form.view.vue"
-      ),
-  },
-  {
-    path: "/cases/new",
-    name: "index-new" /* Caution: This acts as an identifier! */,
-    meta: {
-      menu: false,
-    },
-    component: () =>
-      import(
-        /* webpackChunkName: "index-tracking-form" */ "../views/index-tracking-form/index-tracking-form.view.vue"
-      ),
-  },
-  {
-    path: "/events/list",
-    name: "event-list" /* Caution: This acts as an identifier! */,
+    path: "/school-entry-exam/list",
+    name: "school-entry-exam-list" /* Caution: This acts as an identifier! */,
     meta: {
       menu: true,
-      menuName: "Ereignisse",
+      menuName: "Schule",
     },
     component: () =>
       import(
-        /* webpackChunkName: "event-tracking-list" */ "../views/event-tracking-list/event-tracking-list.view.vue"
+        /* webpackChunkName: "school-entry-exam-list" */ "../modules/school-entry-exam/views/list/school-entry-exam-list.view.vue"
       ),
   },
   {
-    path: "/cases/list",
-    name: "index-list" /* Caution: This acts as an identifier! */,
-    meta: {
-      menu: true,
-      menuName: "Indexfälle",
-    },
-    component: () =>
-      import(
-        /* webpackChunkName: "index-tracking-list" */ "../views/index-tracking-list/index-tracking-list.view.vue"
-      ),
-  },
-  {
-    path: "/events/details/:id",
-    name: "event-details" /* Caution: This acts as an identifier! */,
+    path: "/school-entry-exam/details/:id",
+    name: "school-entry-exam-details" /* Caution: This acts as an identifier! */,
     meta: {
       menu: false,
     },
     component: () =>
       import(
-        /* webpackChunkName: "event-tracking-details" */ "../views/event-tracking-details/event-tracking-details.view.vue"
-      ),
-  },
-  {
-    path: "/cases/details/:caseId",
-    name: "index-details" /* Caution: This acts as an identifier! */,
-    meta: {
-      menu: false,
-    },
-    component: () =>
-      import(
-        /* webpackChunkName: "index-tracking-details" */ "../views/index-tracking-details/index-tracking-details.view.vue"
+        /* webpackChunkName: "school-entry-exam-details" */ "../modules/school-entry-exam/views/details/school-entry-exam-details.view.vue"
       ),
   },
   {
@@ -205,29 +228,29 @@ export const routes: Array<RouteConfig> = [
         /* webpackChunkName: "iris-message-create" */ "../views/iris-message-create/iris-message-create.view.vue"
       ),
   },
-  {
-    path: "/vaccination-report/list",
-    name: "vaccination-report-list" /* Caution: This acts as an identifier! */,
-    meta: {
-      menu: true,
-      menuName: "Impfberichte",
-    },
-    component: () =>
-      import(
-        /* webpackChunkName: "vaccination-report-list" */ "../modules/vaccination-report/views/list/vaccination-report-list.view.vue"
-      ),
-  },
-  {
-    path: "/vaccination-report/details/:id",
-    name: "vaccination-report-details" /* Caution: This acts as an identifier! */,
-    meta: {
-      menu: false,
-    },
-    component: () =>
-      import(
-        /* webpackChunkName: "vaccination-report-details" */ "../modules/vaccination-report/views/details/vaccination-report-details.view.vue"
-      ),
-  },
+  // {
+  //   path: "/vaccination-report/list",
+  //   name: "vaccination-report-list" /* Caution: This acts as an identifier! */,
+  //   meta: {
+  //     menu: true,
+  //     menuName: "Impfberichte",
+  //   },
+  //   component: () =>
+  //     import(
+  //       /* webpackChunkName: "vaccination-report-list" */ "../modules/vaccination-report/views/list/vaccination-report-list.view.vue"
+  //     ),
+  // },
+  // {
+  //   path: "/vaccination-report/details/:id",
+  //   name: "vaccination-report-details" /* Caution: This acts as an identifier! */,
+  //   meta: {
+  //     menu: false,
+  //   },
+  //   component: () =>
+  //     import(
+  //       /* webpackChunkName: "vaccination-report-details" */ "../modules/vaccination-report/views/details/vaccination-report-details.view.vue"
+  //     ),
+  // },
   {
     path: "/about",
     name: "about" /* Caution: This acts as an identifier! */,

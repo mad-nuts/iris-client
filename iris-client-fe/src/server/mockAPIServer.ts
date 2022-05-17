@@ -45,6 +45,7 @@ import {
 } from "@/server/data/dummy-iris-messages";
 import { DataQuery } from "@/api/common";
 import { vaccinationReportList } from "@/server/data/vaccination-reports";
+import { schoolEntryExamList } from "@/server/data/school-entry-exam";
 
 const loginResponse = (role: UserRole): Response => {
   return new Response(200, {
@@ -387,6 +388,18 @@ export function makeMockAPIServer() {
 
       this.get("/vaccination-reports/:id", (schema, request) => {
         const item = vaccinationReportList.find(
+          (it) => it.id === request.params.id
+        );
+        return authResponse(request, item);
+      });
+
+      this.get("/school-entry-exams", (schema, request) => {
+        const query: Partial<DataQuery> = request.queryParams;
+        return authResponse(request, queriedPage(schoolEntryExamList, query));
+      });
+
+      this.get("/school-entry-exams/:id", (schema, request) => {
+        const item = schoolEntryExamList.find(
           (it) => it.id === request.params.id
         );
         return authResponse(request, item);

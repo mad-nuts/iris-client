@@ -1902,6 +1902,7 @@ export type IrisMessageDataSelectionPayload = {
  * @example vaccination-report-details.view, event-tracking-details.view
  */
 export enum IrisMessageDataDiscriminator {
+  // SchoolEntryExam = "school-entry-exam",
   EventTracking = "event-tracking",
   VaccinationReport = "vaccination-report",
 }
@@ -1999,6 +2000,77 @@ export interface VaccinationReport {
 
 export interface VaccinationReportDetails extends VaccinationReport {
   employees?: VREmployee[];
+}
+
+/**
+ *
+ export const medicalFields = {
+  child: {
+    name: 'Mustermann',
+    firstName: 'Sophia',
+    street: 'Musterstraße',
+    houseNumber: '12',
+    zipCode: '12345',
+    city: 'Musterort',
+    birthLocation: 'Musterstadt',
+    birthday: dayjs().subtract(6, 'years').add(46, 'days').toDate(),
+    school: 'Musterschule',
+    kindergarten: 'Musterhort',
+  },
+  mother: {
+    name: 'Mustermann',
+    firstName: 'Gertrude',
+    birthLocation: 'Musterhausen',
+    birthday: dayjs().subtract(26, 'years').add(24, 'days').toDate(),
+    nationality: 'Deutsch',
+    graduation: 'Abitur'
+  },
+  father: {
+    name: 'Mustermann',
+    firstName: 'Max',
+    birthLocation: 'Musterbach',
+    birthday: dayjs().subtract(33, 'years').add(75, 'days').toDate(),
+    nationality: 'Deutsch',
+    graduation: 'Mittlere Reife'
+  },
+  development: {
+    pregnancy: 'problemlos',
+    birth: 'problemlos',
+    birthWeight: '3600gr'
+  },
+  environment: {
+    languages: 'Deutsch, Englisch',
+    childCount: '2',
+  }
+};
+
+ */
+
+export interface SchoolEntryChild {
+  name?: string;
+  firstName?: string;
+  address?: Address;
+  birthLocation?: string;
+  birthday?: string;
+  school?: string;
+  kindergarten?: string;
+}
+
+export interface SchoolEntryParent {
+  name?: string;
+  firstName?: string;
+  address?: Address;
+  birthLocation?: string;
+  birthday?: string;
+  nationality?: string;
+  graduation?: string;
+}
+
+export interface SchoolEntryExam extends MetaData {
+  id: string;
+  child: SchoolEntryChild;
+  mother: SchoolEntryParent;
+  father: SchoolEntryParent;
 }
 
 /**
@@ -2526,6 +2598,36 @@ export class IrisClientFrontendApi extends BaseAPI {
   ): ApiResponse<VaccinationReportDetails> {
     assertParamExists("vaccinationReportDetailsGet", "id", id);
     const path = `/vaccination-reports/${encodeURIComponent(id)}`;
+    return this.apiRequest("GET", path, null, options);
+  }
+
+  /**
+   *
+   * @summary Fetches paginated school entry exams
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof IrisClientFrontendApi
+   */
+  public pageSchoolEntryExamGet(
+    options?: RequestOptions
+  ): ApiResponse<Page<SchoolEntryExam>> {
+    return this.apiRequest("GET", "/school-entry-exams", null, options);
+  }
+
+  /**
+   *
+   * @summary Fetches school entry exam details
+   * @param {string} id for school entry exam.
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof IrisClientFrontendApi
+   */
+  public schoolEntryExamDetailsGet(
+    id: string,
+    options?: RequestOptions
+  ): ApiResponse<SchoolEntryExam> {
+    assertParamExists("schoolEntryExamDetailsGet", "id", id);
+    const path = `/school-entry-exams/${encodeURIComponent(id)}`;
     return this.apiRequest("GET", path, null, options);
   }
 }

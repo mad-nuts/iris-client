@@ -1,4 +1,4 @@
-import { Page, MetaData } from "@/api";
+import { Page, MetaData, Address } from "@/api";
 import { Complete, normalizeData } from "@/utils/data";
 
 export const normalizePage = <T>(
@@ -43,5 +43,25 @@ export const normalizeMetaData = (source?: MetaData, parse?: boolean) => {
     },
     parse,
     "MetaData"
+  );
+};
+
+export const normalizeAddress = (
+  source?: Address,
+  parse?: boolean
+): Address => {
+  return normalizeData(
+    source,
+    (normalizer) => {
+      const normalized: Complete<Address> = {
+        street: normalizer("street", undefined),
+        houseNumber: normalizer("houseNumber", undefined),
+        zipCode: normalizer("zipCode", undefined),
+        city: normalizer("city", undefined),
+      };
+      return normalized;
+    },
+    parse,
+    "Address"
   );
 };
