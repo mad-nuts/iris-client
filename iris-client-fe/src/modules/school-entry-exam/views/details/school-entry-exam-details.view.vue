@@ -6,6 +6,7 @@
     :school-entry-exam="schoolEntryExam"
   >
     <template #actions>
+      <v-divider />
       <v-card-actions>
         <v-btn text @click="goBack"> Zurück </v-btn>
         <v-spacer />
@@ -52,8 +53,8 @@ export default class SchoolEntryExamDetailsView extends Mixins(
 
   get messageData(): IrisMessageDataInsert {
     return {
-      discriminator: IrisMessageDataDiscriminator.VaccinationReport,
-      description: "test",
+      discriminator: IrisMessageDataDiscriminator.SchoolEntryExam,
+      description: this.schoolEntryExam?.child.name || "",
       payload: {
         exam: this.schoolEntryExam?.id || "",
       },

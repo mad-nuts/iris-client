@@ -21,7 +21,6 @@
       </v-row>
       <error-message-alert :errors="errors" />
     </v-card-text>
-    <v-divider />
     <slot name="actions" />
   </v-card>
 </template>

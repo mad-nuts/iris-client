@@ -1902,7 +1902,7 @@ export type IrisMessageDataSelectionPayload = {
  * @example vaccination-report-details.view, event-tracking-details.view
  */
 export enum IrisMessageDataDiscriminator {
-  // SchoolEntryExam = "school-entry-exam",
+  SchoolEntryExam = "school-entry-exam",
   EventTracking = "event-tracking",
   VaccinationReport = "vaccination-report",
 }

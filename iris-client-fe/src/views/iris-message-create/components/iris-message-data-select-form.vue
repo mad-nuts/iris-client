@@ -102,6 +102,12 @@ type DiscriminatorOption = {
 };
 
 const dataComponentSource: IrisMessageDataComponentSource = {
+  [IrisMessageDataDiscriminator.SchoolEntryExam]: {
+    component: () =>
+      import(
+        /* webpackChunkName: "school-entry-exam-message-data.export" */ "../../../modules/school-entry-exam/modules/message-data/school-entry-exam-message-data.export.vue"
+      ),
+  },
   [IrisMessageDataDiscriminator.EventTracking]: {
     component: () =>
       import(

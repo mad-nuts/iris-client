@@ -14,6 +14,7 @@ import { getDummyDetailsWithStatus } from "@/server/data/data-requests";
 import { EventTrackingMessageDataImportSelection } from "@/modules/event-tracking/modules/message-data/services/normalizer";
 import { vaccinationReportList } from "@/server/data/vaccination-reports";
 import { VaccinationReportMessageDataImportSelection } from "@/modules/vaccination-report/modules/message-data/services/normalizer";
+import { schoolEntryExamList } from "@/server/data/school-entry-exam";
 
 export const dummyIrisMessageFolders: IrisMessageFolder[] = [
   {
@@ -79,6 +80,7 @@ export const dummyIrisMessageHdContacts: IrisMessageHdContact[] = [
 export enum DummyMessageDataId {
   EventTracking = "m1_md_et1",
   VaccinationReport = "m1_md_vr1",
+  SchoolEntryExam = "m1_md_se_1",
 }
 
 export const getDummyIrisMessageViewData = (
@@ -89,6 +91,13 @@ export const getDummyIrisMessageViewData = (
       discriminator: IrisMessageDataDiscriminator.VaccinationReport,
       id: messageDataId,
       payload: vaccinationReportList[0],
+    };
+  }
+  if (messageDataId === DummyMessageDataId.SchoolEntryExam) {
+    return {
+      discriminator: IrisMessageDataDiscriminator.SchoolEntryExam,
+      id: messageDataId,
+      payload: schoolEntryExamList[0],
     };
   }
   const requestDetails = getDummyDetailsWithStatus("");
@@ -104,6 +113,9 @@ export const getDummyIrisMessageImportSelection = (
 ): IrisMessageDataViewData => {
   if (messageDataId === DummyMessageDataId.VaccinationReport) {
     return getDummyIrisMessageVRImportSelection(messageDataId);
+  }
+  if (messageDataId === DummyMessageDataId.SchoolEntryExam) {
+    return getDummyIrisMessageSchoolEntryExamImportSelection(messageDataId);
   }
   return getDummyIrisMessageEventImportSelection(messageDataId);
 };
@@ -125,6 +137,16 @@ const getDummyIrisMessageVRImportSelection = (
     discriminator: IrisMessageDataDiscriminator.VaccinationReport,
     id: messageDataId,
     payload,
+  };
+};
+
+const getDummyIrisMessageSchoolEntryExamImportSelection = (
+  messageDataId: string
+): IrisMessageDataViewData => {
+  return {
+    discriminator: IrisMessageDataDiscriminator.SchoolEntryExam,
+    id: messageDataId,
+    payload: null,
   };
 };
 
@@ -162,9 +184,19 @@ const dummyIrisMessageDataVaccinationReport: IrisMessageDataAttachment = {
   description: "vaccination report data attachment",
 };
 
+const dummyIrisMessageDataSchoolEntryExam: IrisMessageDataAttachment = {
+  id: DummyMessageDataId.SchoolEntryExam,
+  discriminator: IrisMessageDataDiscriminator.SchoolEntryExam,
+  isImported: false,
+  description: "school entry exam data attachment",
+};
+
 export const getDummyIrisMessageData = (messageDataId: string) => {
   if (messageDataId === DummyMessageDataId.VaccinationReport) {
     return dummyIrisMessageDataVaccinationReport;
+  }
+  if (messageDataId === DummyMessageDataId.SchoolEntryExam) {
+    return dummyIrisMessageDataSchoolEntryExam;
   }
   return dummyIrisMessageDataEventTracking;
 };
@@ -183,6 +215,7 @@ export const dummyIrisMessageList: IrisMessageDetails[] = [
     dataAttachments: [
       dummyIrisMessageDataEventTracking,
       dummyIrisMessageDataVaccinationReport,
+      dummyIrisMessageDataSchoolEntryExam,
     ],
     attachmentCount: {
       total: 2,

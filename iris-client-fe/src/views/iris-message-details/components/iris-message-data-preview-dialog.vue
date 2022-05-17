@@ -29,6 +29,7 @@ import ErrorMessageAlert from "@/components/error-message-alert.vue";
 import {
   DataRequestDetails,
   IrisMessageDataDiscriminator,
+  SchoolEntryExam,
   VaccinationReportDetails,
 } from "@/api";
 import { normalizeDataRequestDetails } from "@/views/event-tracking-details/event-tracking-details.data";
@@ -36,6 +37,7 @@ import IrisMessageDataView, {
   IrisMessageDataViewSource,
 } from "@/modules/iris-message/modules/message-data/components/iris-message-data-view.vue";
 import { normalizeVaccinationReportDetails } from "@/modules/vaccination-report/services/normalizer";
+import { normalizeSchoolEntryExam } from "@/modules/school-entry-exam/services/normalizer";
 
 /**
  * Please provide a preview of a specific MessageData type.
@@ -54,6 +56,7 @@ import { normalizeVaccinationReportDetails } from "@/modules/vaccination-report/
  */
 
 type IrisMessageDataViewPayload = {
+  [IrisMessageDataDiscriminator.SchoolEntryExam]: SchoolEntryExam;
   [IrisMessageDataDiscriminator.EventTracking]: DataRequestDetails;
   [IrisMessageDataDiscriminator.VaccinationReport]: VaccinationReportDetails;
 };
@@ -61,6 +64,13 @@ type IrisMessageDataViewPayload = {
 type DataViewSource = IrisMessageDataViewSource<IrisMessageDataViewPayload>;
 
 const dataViewSource: DataViewSource = {
+  [IrisMessageDataDiscriminator.SchoolEntryExam]: {
+    normalize: normalizeSchoolEntryExam,
+    component: () =>
+      import(
+        /* webpackChunkName: "school-entry-exam-message-data.preview" */ "../../../modules/school-entry-exam/modules/message-data/school-entry-exam-message-data.preview.vue"
+      ),
+  },
   [IrisMessageDataDiscriminator.EventTracking]: {
     normalize: normalizeDataRequestDetails,
     component: () =>

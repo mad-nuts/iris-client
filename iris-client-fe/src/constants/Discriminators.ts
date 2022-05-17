@@ -6,6 +6,8 @@ const getLabel = (discriminator: IrisMessageDataDiscriminator): string => {
       return "Ereignis";
     case IrisMessageDataDiscriminator.VaccinationReport:
       return "Impfpflichtmeldung";
+    case IrisMessageDataDiscriminator.SchoolEntryExam:
+      return "Schuleingangsuntersuchung";
     default:
       return "Ungültiger Datentyp";
   }

@@ -61,6 +61,7 @@ import {
  */
 
 type IrisMessageDataViewPayload = {
+  [IrisMessageDataDiscriminator.SchoolEntryExam]: EventTrackingMessageDataImportSelection;
   [IrisMessageDataDiscriminator.EventTracking]: EventTrackingMessageDataImportSelection;
   [IrisMessageDataDiscriminator.VaccinationReport]: VaccinationReportMessageDataImportSelection;
 };
@@ -69,6 +70,13 @@ export type DataViewSource =
   IrisMessageDataViewSource<IrisMessageDataViewPayload>;
 
 const dataViewSource: DataViewSource = {
+  [IrisMessageDataDiscriminator.SchoolEntryExam]: {
+    normalize: normalizeEventTrackingMessageDataImportSelection,
+    component: () =>
+      import(
+        /* webpackChunkName: "school-entry-exam-message-data.import" */ "../../../modules/school-entry-exam/modules/message-data/school-entry-exam-message-data.import.vue"
+      ),
+  },
   [IrisMessageDataDiscriminator.EventTracking]: {
     normalize: normalizeEventTrackingMessageDataImportSelection,
     component: () =>
