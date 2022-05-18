@@ -8,6 +8,7 @@ import {
 import _sample from "lodash/sample";
 import _random from "lodash/random";
 import { timeAgo } from "@/server/utils/date";
+import dayjs from "dayjs";
 
 const createAddress = (): Address => {
   return {
@@ -85,10 +86,60 @@ const createExam = (id: string): SchoolEntryExam => {
   };
 };
 
-export const schoolEntryExamList: SchoolEntryExam[] = [
+let schoolEntryExamList: SchoolEntryExam[] = [
   createExam("1"),
   createExam("2"),
   createExam("3"),
   createExam("4"),
   createExam("5"),
 ];
+
+export const getSchoolEntryExamList = (): SchoolEntryExam[] => {
+  return schoolEntryExamList;
+};
+
+export const setSchoolEntryExamList = (
+  list: SchoolEntryExam[]
+): SchoolEntryExam[] => {
+  schoolEntryExamList = list;
+  return schoolEntryExamList;
+};
+
+const matchingAddress: Address = {
+  street: "Musterstraße",
+  houseNumber: "12",
+  zipCode: "12345",
+  city: "Musterort",
+};
+
+export const matchingEntry: SchoolEntryExam = {
+  child: {
+    name: "Mustermann",
+    firstName: "Sophia",
+    address: matchingAddress,
+    birthLocation: "Musterstadt",
+    birthday: dayjs().subtract(6, "years").add(46, "days").toISOString(),
+    school: "Musterschule",
+    kindergarten: "Musterhort",
+  },
+  mother: {
+    name: "Mustermann",
+    firstName: "Gertrude",
+    address: matchingAddress,
+    birthLocation: "Musterhausen",
+    birthday: dayjs().subtract(26, "years").add(24, "days").toISOString(),
+    nationality: "Deutsch",
+    graduation: "Abitur",
+  },
+  father: {
+    name: "Mustermann",
+    firstName: "Max",
+    address: matchingAddress,
+    birthLocation: "Musterbach",
+    birthday: dayjs().subtract(33, "years").add(75, "days").toISOString(),
+    nationality: "Deutsch",
+    graduation: "Mittlere Reife",
+  },
+  createdAt: timeAgo(_random(2, 25), "days"),
+  id: "static",
+};

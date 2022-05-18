@@ -1,11 +1,10 @@
 <template>
-  <v-card class="my-7">
-    <v-card-title> Schuleingangsuntersuchungen </v-card-title>
-    <v-card-text>
-      <data-query-handler
-        @update:query="handleQueryUpdate"
-        #default="{ query }"
-      >
+  <data-query-handler @update:query="handleQueryUpdate" #default="{ query }">
+    <v-card class="my-7">
+      <v-card-title @click="() => addMatchingEntry(query)">
+        Schuleingangsuntersuchungen
+      </v-card-title>
+      <v-card-text>
         <search-field v-model="query.search" />
         <sortable-data-table
           class="mt-5"
@@ -25,9 +24,9 @@
           </template>
         </sortable-data-table>
         <error-message-alert :errors="fetchPage.state.error" />
-      </data-query-handler>
-    </v-card-text>
-  </v-card>
+      </v-card-text>
+    </v-card>
+  </data-query-handler>
 </template>
 
 <script lang="ts">
@@ -42,6 +41,12 @@ import {
   getSchoolEntryExamTableHeaders,
   getSchoolEntryExamTableRows,
 } from "@/modules/school-entry-exam/services/mappedData";
+import {
+  matchingEntry,
+  getSchoolEntryExamList,
+  setSchoolEntryExamList,
+} from "@/server/data/school-entry-exam";
+import _unionBy from "lodash/unionBy";
 
 @Component({
   components: {
@@ -74,6 +79,11 @@ export default class SchoolEntryExamListView extends Vue {
         params: { id: row.id },
       });
     }
+  }
+  addMatchingEntry(q: DataQuery) {
+    const list = _unionBy([matchingEntry], getSchoolEntryExamList());
+    setSchoolEntryExamList(list);
+    this.fetchPage.execute(q);
   }
 }
 </script>

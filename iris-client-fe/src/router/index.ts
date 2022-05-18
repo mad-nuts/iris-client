@@ -172,7 +172,7 @@ export const routes: Array<RouteConfig> = [
     name: "school-entry-exam-list" /* Caution: This acts as an identifier! */,
     meta: {
       menu: true,
-      menuName: "Schule",
+      menuName: "Einschulung",
     },
     component: () =>
       import(

@@ -21,6 +21,7 @@
             {{ exportLabel }}
           </span>
         </data-export-label>
+        <school-entry-exam-data-export :exam="schoolEntryExam" />
         <iris-message-data-export-dialog :data="messageData" label="senden" />
       </v-card-actions>
     </template>
@@ -35,9 +36,11 @@ import DataExportLabel from "@/components/data-export/data-export-label.vue";
 import IrisMessageDataExportDialog from "@/views/iris-message-create/components/iris-message-data-export-dialog.vue";
 import { schoolEntryExamApi } from "@/modules/school-entry-exam/services/api";
 import SchoolEntryExamDetailsComponent from "@/modules/school-entry-exam/views/details/components/school-entry-exam-details.component.vue";
+import SchoolEntryExamDataExport from "@/modules/school-entry-exam/views/details/modules/data-export/components/school-entry-exam-data-export.vue";
 
 @Component({
   components: {
+    SchoolEntryExamDataExport,
     SchoolEntryExamDetailsComponent,
     IrisMessageDataExportDialog,
     DataExportLabel,

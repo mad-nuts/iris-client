@@ -13,10 +13,16 @@
       <v-divider class="my-4" />
       <v-row>
         <v-col cols="12">
-          <span class="mr-3">
-            <strong>Eltern:</strong>
-          </span>
+          <strong>Eltern:</strong>
           <parent-info :school-entry-exam="schoolEntryExam" />
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col cols="12">
+          <strong>Anlagen:</strong>
+          <div>
+            <exam-attachments />
+          </div>
         </v-col>
       </v-row>
       <error-message-alert :errors="errors" />
@@ -36,6 +42,7 @@ import { PropType } from "vue";
 import ExpandableDataTable from "@/components/expandable-data-table.vue";
 import ParentInfo from "@/modules/school-entry-exam/views/details/components/parent-info.vue";
 import ChildInfo from "@/modules/school-entry-exam/views/details/components/child-info.vue";
+import ExamAttachments from "@/modules/school-entry-exam/views/details/components/exam-attachments.vue";
 
 const SchoolEntryExamDetailsComponentProps = Vue.extend({
   inheritAttrs: false,
@@ -57,6 +64,7 @@ const SchoolEntryExamDetailsComponentProps = Vue.extend({
 
 @Component({
   components: {
+    ExamAttachments,
     ChildInfo,
     ParentInfo,
     ExpandableDataTable,

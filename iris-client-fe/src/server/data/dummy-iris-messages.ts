@@ -14,7 +14,7 @@ import { getDummyDetailsWithStatus } from "@/server/data/data-requests";
 import { EventTrackingMessageDataImportSelection } from "@/modules/event-tracking/modules/message-data/services/normalizer";
 import { vaccinationReportList } from "@/server/data/vaccination-reports";
 import { VaccinationReportMessageDataImportSelection } from "@/modules/vaccination-report/modules/message-data/services/normalizer";
-import { schoolEntryExamList } from "@/server/data/school-entry-exam";
+import { getSchoolEntryExamList } from "@/server/data/school-entry-exam";
 
 export const dummyIrisMessageFolders: IrisMessageFolder[] = [
   {
@@ -97,7 +97,7 @@ export const getDummyIrisMessageViewData = (
     return {
       discriminator: IrisMessageDataDiscriminator.SchoolEntryExam,
       id: messageDataId,
-      payload: schoolEntryExamList[0],
+      payload: getSchoolEntryExamList()[0],
     };
   }
   const requestDetails = getDummyDetailsWithStatus("");
