@@ -36,12 +36,13 @@ import {
 } from "@/server/data/status-checkin-apps";
 import {
   dummyIrisMessageFolders,
-  dummyIrisMessageList,
   dummyIrisMessageHdContacts,
   getDummyMessageFromRequest,
   getDummyIrisMessageImportSelection,
   getDummyIrisMessageViewData,
   getDummyIrisMessageData,
+  getIrisMessageList,
+  setIrisMessageList,
 } from "@/server/data/dummy-iris-messages";
 import { DataQuery } from "@/api/common";
 import { vaccinationReportList } from "@/server/data/vaccination-reports";
@@ -311,19 +312,19 @@ export function makeMockAPIServer() {
         const query: Partial<DataQuery> = request.queryParams;
         return authResponse(
           request,
-          queriedPage(dummyIrisMessageList as IrisMessage[], query)
+          queriedPage(getIrisMessageList() as IrisMessage[], query)
         );
       });
 
       this.get("/iris-messages/:messageId", (schema, request) => {
-        const message = dummyIrisMessageList.find(
+        const message = getIrisMessageList().find(
           (msg) => msg.id === request.params.messageId
         );
         return authResponse(request, message);
       });
 
       this.patch("/iris-messages/:messageId", (schema, request) => {
-        const message = dummyIrisMessageList.find((msg) => {
+        const message = getIrisMessageList().find((msg) => {
           if (msg.id === request.params.messageId) {
             msg.isRead = true;
             return true;
@@ -336,7 +337,11 @@ export function makeMockAPIServer() {
       this.post("/iris-messages", (schema, request) => {
         try {
           if (validateAuthHeader(request)) {
-            dummyIrisMessageList.push(getDummyMessageFromRequest(request));
+            const msgList = getIrisMessageList();
+            msgList.reverse();
+            msgList.push(getDummyMessageFromRequest(request));
+            msgList.reverse();
+            setIrisMessageList(msgList);
           }
         } catch (e) {
           // ignored
@@ -355,7 +360,7 @@ export function makeMockAPIServer() {
       this.get("/iris-messages/count/unread", (schema, request) => {
         return authResponse(
           request,
-          dummyIrisMessageList.filter((item) => !item.isRead).length
+          getIrisMessageList().filter((item) => !item.isRead).length
         );
       });
 

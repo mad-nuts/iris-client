@@ -1,4 +1,4 @@
-import { daysAgo } from "@/server/utils/date";
+import { daysAgo, daysAgoRandomized, hoursAgo } from "@/server/utils/date";
 import {
   IrisMessageContext,
   IrisMessageDataAttachment,
@@ -21,30 +21,6 @@ export const dummyIrisMessageFolders: IrisMessageFolder[] = [
     id: "inbox",
     name: "Posteingang",
     context: IrisMessageContext.Inbox,
-    items: [
-      {
-        id: "inbox_1",
-        name: "Ordner 1",
-        context: IrisMessageContext.Inbox,
-      },
-      {
-        id: "inbox_2",
-        name: "Ordner 2",
-        context: IrisMessageContext.Inbox,
-        items: [
-          {
-            id: "inbox_2_1",
-            name: "Ordner 2 1",
-            context: IrisMessageContext.Inbox,
-          },
-          {
-            id: "inbox_2_2",
-            name: "Ordner 2 2",
-            context: IrisMessageContext.Inbox,
-          },
-        ],
-      },
-    ],
   },
   {
     id: "outbox",
@@ -61,19 +37,19 @@ export const dummyIrisMessageHdContacts: IrisMessageHdContact[] = [
   },
   {
     id: "2",
-    name: "Kontakt 2",
+    name: "GA Bickenhain",
   },
   {
     id: "3",
-    name: "Kontakt 3",
+    name: "GA Torfling",
   },
   {
     id: "4",
-    name: "Kontakt 4",
+    name: "GA Gunnershausen",
   },
   {
     id: "5",
-    name: "Kontakt 5",
+    name: "GA Darmburg",
   },
 ];
 
@@ -188,7 +164,7 @@ const dummyIrisMessageDataSchoolEntryExam: IrisMessageDataAttachment = {
   id: DummyMessageDataId.SchoolEntryExam,
   discriminator: IrisMessageDataDiscriminator.SchoolEntryExam,
   isImported: false,
-  description: "school entry exam data attachment",
+  description: "Mustermann",
 };
 
 export const getDummyIrisMessageData = (messageDataId: string) => {
@@ -201,27 +177,24 @@ export const getDummyIrisMessageData = (messageDataId: string) => {
   return dummyIrisMessageDataEventTracking;
 };
 
-export const dummyIrisMessageList: IrisMessageDetails[] = [
-  {
-    hdAuthor: dummyIrisMessageHdContacts[1],
-    hdRecipient: dummyIrisMessageHdContacts[0],
-    folder: "inbox",
-    context: IrisMessageContext.Inbox,
-    id: "m1",
-    subject: "Indexfall-Anfrage consetetur sadipscing elitr",
-    body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-    createdAt: daysAgo(3),
-    isRead: false,
-    dataAttachments: [
-      dummyIrisMessageDataEventTracking,
-      dummyIrisMessageDataVaccinationReport,
-      dummyIrisMessageDataSchoolEntryExam,
-    ],
-    attachmentCount: {
-      total: 2,
-      imported: 0,
-    },
+export const schoolInboxMessage: IrisMessageDetails = {
+  hdAuthor: dummyIrisMessageHdContacts[1],
+  hdRecipient: dummyIrisMessageHdContacts[0],
+  folder: "inbox",
+  context: IrisMessageContext.Inbox,
+  id: "m1",
+  subject: "Schuleingangsuntersuchung",
+  body: "Übermittlung der Untersuchungsdaten für Sophia Mustermann aufgrund von Umzug der Familie Mustermann.",
+  createdAt: daysAgo(0),
+  isRead: false,
+  dataAttachments: [dummyIrisMessageDataSchoolEntryExam],
+  attachmentCount: {
+    total: 1,
+    imported: 0,
   },
+};
+
+let dummyIrisMessageList: IrisMessageDetails[] = [
   {
     hdAuthor: dummyIrisMessageHdContacts[0],
     hdRecipient: dummyIrisMessageHdContacts[4],
@@ -230,30 +203,19 @@ export const dummyIrisMessageList: IrisMessageDetails[] = [
     id: "2",
     subject: "Austausch",
     body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.",
-    createdAt: daysAgo(1),
+    createdAt: daysAgoRandomized(1),
     isRead: true,
   },
   {
     hdAuthor: dummyIrisMessageHdContacts[2],
     hdRecipient: dummyIrisMessageHdContacts[0],
-    folder: "inbox_2_1",
+    folder: "inbox",
     context: IrisMessageContext.Inbox,
     id: "5",
     subject: "Anfrage",
     body: "At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-    createdAt: daysAgo(5),
+    createdAt: daysAgoRandomized(4),
     isRead: false,
-  },
-  {
-    hdAuthor: dummyIrisMessageHdContacts[0],
-    hdRecipient: dummyIrisMessageHdContacts[2],
-    context: IrisMessageContext.Outbox,
-    folder: "outbox",
-    id: "asdf",
-    subject: "Lorem ipsum gubergren, no sea takimata ",
-    body: "Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-    createdAt: daysAgo(2),
-    isRead: true,
   },
   {
     hdAuthor: dummyIrisMessageHdContacts[3],
@@ -261,12 +223,23 @@ export const dummyIrisMessageList: IrisMessageDetails[] = [
     context: IrisMessageContext.Inbox,
     folder: "inbox",
     id: "271",
-    subject: "Test",
+    subject: "Abstimmung",
     body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et",
-    createdAt: daysAgo(4),
+    createdAt: daysAgoRandomized(5),
     isRead: true,
   },
 ];
+
+export const getIrisMessageList = (): IrisMessageDetails[] => {
+  return dummyIrisMessageList;
+};
+
+export const setIrisMessageList = (
+  list: IrisMessageDetails[]
+): IrisMessageDetails[] => {
+  dummyIrisMessageList = list;
+  return dummyIrisMessageList;
+};
 
 export const getDummyMessageFromRequest = (
   request: Request,
@@ -287,6 +260,6 @@ export const getDummyMessageFromRequest = (
     hdRecipient:
       dummyIrisMessageHdContacts.find((c) => c.id === recipient) ||
       dummyIrisMessageHdContacts[1],
-    createdAt: new Date().getTime() + "",
+    createdAt: hoursAgo(0),
   };
 };

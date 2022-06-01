@@ -57,6 +57,13 @@ export default class SchoolEntryExamMessageDataExport extends SchoolEntryExamMes
     exam: "",
   };
 
+  @Watch("value")
+  onValueChange(newValue: IrisMessageDataSelectionPayload) {
+    if (newValue) {
+      this.model = newValue;
+    }
+  }
+
   @Watch("model", { immediate: true, deep: true })
   onModelChange(newValue: IrisMessageDataSelectionPayload) {
     if (_every(_values(newValue), (v) => rules.defined(v) === true)) {

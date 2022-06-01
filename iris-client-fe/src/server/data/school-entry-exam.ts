@@ -12,17 +12,29 @@ import dayjs from "dayjs";
 
 const createAddress = (): Address => {
   return {
-    street: _sample(["Dunkle Gasse", "Hauptstraße", "Testweg", "Tastallee"]),
+    street: _sample([
+      "Pfaffenhainweg",
+      "Hauptstraße",
+      "Bahnhofstraße",
+      "Messelallee",
+    ]),
     houseNumber: `${_random(1, 20)}`,
     zipCode: `${_random(10000, 99999)}`,
-    city: _sample(["Musterhausen", "Testort", "Testing", "Einsiedlerhof"]),
+    city: _sample([
+      "Densburg",
+      "Becherbach",
+      "Messel",
+      "Essing",
+      "Pfaffenhain",
+      "Wurmberg",
+    ]),
   };
 };
 
 const getFirstName = (gender: Sex): string | undefined => {
   switch (gender) {
     case Sex.Male:
-      return _sample(["Max", "Klaus", "Gunner"]);
+      return _sample(["Martin", "Karl", "Klaus", "Gunner"]);
     case Sex.Female:
       return _sample(["Bärbel", "Gabi", "Lena"]);
     default:
@@ -42,10 +54,12 @@ const createParent = (
     nationality: "deutsch",
     birthday: timeAgo(_random(25, 40), "years"),
     birthLocation: _sample([
-      "Musterhausen",
-      "Testort",
-      "Testing",
-      "Einsiedlerhof",
+      "Densburg",
+      "Becherbach",
+      "Messel",
+      "Essing",
+      "Pfaffenhain",
+      "Wurmberg",
     ]),
   };
 };
@@ -57,10 +71,12 @@ const createChild = (parent: SchoolEntryParent): SchoolEntryChild => {
     address: parent.address,
     birthday: timeAgo(_random(5, 7), "years"),
     birthLocation: _sample([
-      "Musterhausen",
-      "Testort",
-      "Testing",
-      "Einsiedlerhof",
+      "Densburg",
+      "Becherbach",
+      "Messel",
+      "Essing",
+      "Pfaffenhain",
+      "Wurmberg",
     ]),
     kindergarten: _sample([
       "Musterkindergarten",
@@ -69,8 +85,8 @@ const createChild = (parent: SchoolEntryParent): SchoolEntryChild => {
     ]),
     school: _sample([
       "Musterschule",
-      "Test Gesamtschule",
-      "Grundschule Musterort",
+      "Dorstfeld Gesamtschule",
+      "Grundschule Pfaffenhain",
     ]),
   };
 };
@@ -82,7 +98,7 @@ const createExam = (id: string): SchoolEntryExam => {
     mother,
     father: createParent(Sex.Male, mother),
     child: createChild(mother),
-    createdAt: timeAgo(_random(2, 25), "days"),
+    createdAt: timeAgo(_random(5, 25), "days"),
   };
 };
 
@@ -106,10 +122,10 @@ export const setSchoolEntryExamList = (
 };
 
 const matchingAddress: Address = {
-  street: "Musterstraße",
+  street: "Becherweg",
   houseNumber: "12",
   zipCode: "12345",
-  city: "Musterort",
+  city: "Densburg",
 };
 
 export const matchingEntry: SchoolEntryExam = {
@@ -117,7 +133,7 @@ export const matchingEntry: SchoolEntryExam = {
     name: "Mustermann",
     firstName: "Sophia",
     address: matchingAddress,
-    birthLocation: "Musterstadt",
+    birthLocation: "Densburg",
     birthday: dayjs().subtract(6, "years").add(46, "days").toISOString(),
     school: "Musterschule",
     kindergarten: "Musterhort",
@@ -126,7 +142,7 @@ export const matchingEntry: SchoolEntryExam = {
     name: "Mustermann",
     firstName: "Gertrude",
     address: matchingAddress,
-    birthLocation: "Musterhausen",
+    birthLocation: "Pfaffenhain",
     birthday: dayjs().subtract(26, "years").add(24, "days").toISOString(),
     nationality: "Deutsch",
     graduation: "Abitur",
@@ -135,11 +151,11 @@ export const matchingEntry: SchoolEntryExam = {
     name: "Mustermann",
     firstName: "Max",
     address: matchingAddress,
-    birthLocation: "Musterbach",
+    birthLocation: "Dorstfeld",
     birthday: dayjs().subtract(33, "years").add(75, "days").toISOString(),
     nationality: "Deutsch",
     graduation: "Mittlere Reife",
   },
-  createdAt: timeAgo(_random(2, 25), "days"),
+  createdAt: timeAgo(_random(1, 4), "days"),
   id: "static",
 };

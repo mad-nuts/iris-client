@@ -7,7 +7,9 @@
     data-test="message-data.export-form"
   >
     <v-card>
-      <v-card-title> Daten wählen </v-card-title>
+      <v-card-title @click="() => fillFormValues()">
+        Daten wählen
+      </v-card-title>
       <v-card-text>
         <div class="d-flex flex-column fill-height vertical-row">
           <div class="flex-grow-0">
@@ -70,6 +72,12 @@ import { parseData } from "@/utils/data";
 import IrisMessageDataComponent, {
   IrisMessageDataComponentSource,
 } from "@/modules/iris-message/modules/message-data/components/iris-message-data-component.vue";
+import _unionBy from "lodash/unionBy";
+import {
+  getSchoolEntryExamList,
+  matchingEntry,
+  setSchoolEntryExamList,
+} from "@/server/data/school-entry-exam";
 
 /**
  * Please provide a user-interface for selecting the payload of the MessageData a user wants to send to another Health-Department.
@@ -194,6 +202,20 @@ export default class IrisMessageDataSelectForm extends IrisMessageDataSelectForm
 
   cancel() {
     this.$emit("cancel");
+  }
+  fillFormValues() {
+    const list = _unionBy([matchingEntry], getSchoolEntryExamList());
+    setSchoolEntryExamList(list);
+    this.form.model.discriminator =
+      IrisMessageDataDiscriminator.SchoolEntryExam;
+    setTimeout(() => {
+      this.form.model.description = "Mustermann";
+      setTimeout(() => {
+        this.form.model.payload = {
+          exam: "static",
+        };
+      }, 1000);
+    }, 2000);
   }
 }
 </script>

@@ -9,14 +9,16 @@
         Nachricht schreiben
       </v-btn>
     </div>
-    <v-card>
-      <v-card-title>Nachrichten</v-card-title>
-      <v-card-text>
-        <data-query-handler
-          ref="queryHandler"
-          @update:query="messageQuery = $event"
-          #default="{ query }"
+    <data-query-handler
+      ref="queryHandler"
+      @update:query="messageQuery = $event"
+      #default="{ query }"
+    >
+      <v-card>
+        <v-card-title @click="() => addMatchingEntry()"
+          >Nachrichten</v-card-title
         >
+        <v-card-text>
           <iris-message-folders-data-tree
             :folders="messageApi.fetchMessageFolders.state.result"
             :loading="messageApi.fetchMessageFolders.state.loading"
@@ -42,9 +44,9 @@
             </template>
           </iris-message-folders-data-tree>
           <error-message-alert :errors="errors" />
-        </data-query-handler>
-      </v-card-text>
-    </v-card>
+        </v-card-text>
+      </v-card>
+    </data-query-handler>
   </div>
 </template>
 
@@ -63,6 +65,12 @@ import {
   fetchUnreadMessageCountApi,
 } from "@/modules/iris-message/services/api";
 import { IrisMessageContext, IrisMessageFolder } from "@/api";
+import _unionBy from "lodash/unionBy";
+import {
+  getIrisMessageList,
+  schoolInboxMessage,
+  setIrisMessageList,
+} from "@/server/data/dummy-iris-messages";
 
 @Component({
   components: {
@@ -107,6 +115,11 @@ export default class IrisMessageListView extends Vue {
     }
   }
 
+  @Watch("messageQuery.folder", { immediate: true, deep: true })
+  onQueryFolderChange() {
+    this.messageApi.fetchMessages.reset(["result"]);
+  }
+
   get currentMessageContext(): IrisMessageContext {
     const folders: IrisMessageFolder[] | null =
       this.messageApi.fetchMessageFolders.state.result;
@@ -117,7 +130,6 @@ export default class IrisMessageListView extends Vue {
   }
 
   fetchMessages(query: DataQuery | null) {
-    this.messageApi.fetchMessages.reset(["result"]);
     if (query?.folder) {
       this.messageApi.fetchMessages.execute(query);
     }
@@ -128,6 +140,11 @@ export default class IrisMessageListView extends Vue {
       name: "iris-message-details",
       params: { messageId: row.id },
     });
+  }
+  addMatchingEntry() {
+    const list = _unionBy([schoolInboxMessage], getIrisMessageList());
+    setIrisMessageList(list);
+    fetchUnreadMessageCountApi.execute();
   }
 }
 </script>

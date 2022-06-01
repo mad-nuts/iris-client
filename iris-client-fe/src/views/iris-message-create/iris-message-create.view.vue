@@ -7,7 +7,9 @@
       :disabled="disabled"
     >
       <v-card>
-        <v-card-title>Nachricht schreiben</v-card-title>
+        <v-card-title @click="() => fillFormValues()">
+          Nachricht schreiben
+        </v-card-title>
         <v-card-text>
           <v-row>
             <v-col cols="12">
@@ -169,6 +171,7 @@ import ConfirmDialog from "@/components/confirm-dialog.vue";
 import { getApiErrorMessages } from "@/utils/api";
 import { bundleIrisMessageApi } from "@/modules/iris-message/services/api";
 import store from "@/store";
+import { schoolInboxMessage } from "@/server/data/dummy-iris-messages";
 
 type IrisMessageCreateForm = {
   model: IrisMessageInsert;
@@ -266,6 +269,16 @@ export default class IrisMessageCreateView extends Vue {
       await this.messageApi.createMessage.execute(payload);
       await this.$router.replace({ name: "iris-message-list" });
     }
+  }
+
+  fillFormValues() {
+    this.form.model.hdRecipient = "4";
+    setTimeout(() => {
+      this.form.model.subject = schoolInboxMessage.subject;
+      setTimeout(() => {
+        this.form.model.body = schoolInboxMessage.body;
+      }, 1000);
+    }, 1000);
   }
 }
 </script>
