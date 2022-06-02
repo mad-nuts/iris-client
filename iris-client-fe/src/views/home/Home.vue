@@ -7,8 +7,8 @@
     <v-row>
       <v-col cols="6" offset="3">
         <counter-widget
-          subtitle="offene Schuleingangsuntersuchungen"
-          :count="5"
+          subtitle="Schuleingangsuntersuchungen"
+          :count="openSchoolExams"
           actionlabel="Zur Übersicht"
           image="sketch_reviewed_docs.svg"
           actionlink="school-entry-exam/list"
@@ -16,8 +16,10 @@
       </v-col>
       <v-col cols="6" offset="3">
         <counter-widget
-          subtitle="ungelesene Nachrichten"
-          :count="2"
+          :subtitle="`ungelesene ${
+            unreadMessageCount === 1 ? 'Nachricht' : 'Nachrichten'
+          }`"
+          :count="unreadMessageCount"
           actionlabel="Zum Postfach"
           image="sketch_file_analysis.svg"
           actionlink="iris-messages/list"
@@ -40,6 +42,8 @@ import { ErrorMessage } from "@/utils/axios";
 import StatusColors from "@/constants/StatusColors";
 import StatusMessages from "@/constants/StatusMessages";
 import { join } from "@/utils/misc";
+import { getSchoolEntryExamList } from "@/server/data/school-entry-exam";
+import { fetchUnreadMessageCountApi } from "@/modules/iris-message/services/api";
 
 const tableRowMapper = (
   dataRequest: ExistingDataRequestClientWithLocation
@@ -100,6 +104,14 @@ function getFormattedDate(date?: string): string {
 export default class Home extends Vue {
   get eventTrackingListError(): ErrorMessage {
     return store.state.home.eventTrackingListError;
+  }
+
+  get openSchoolExams(): number {
+    return getSchoolEntryExamList().length;
+  }
+
+  get unreadMessageCount(): number {
+    return fetchUnreadMessageCountApi.state.result ?? 0;
   }
 
   get openEventListData(): TableRow[] {
