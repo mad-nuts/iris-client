@@ -48,7 +48,7 @@ import { DataQuery } from "@/api/common";
 import { vaccinationReportList } from "@/server/data/vaccination-reports";
 import { getSchoolEntryExamList } from "@/server/data/school-entry-exam";
 
-const loginResponse = (role: UserRole): Response => {
+const loginResponse = (role: string): Response => {
   return new Response(200, {
     "Authentication-Info": `Bearer TOKEN.${role}`,
   });
@@ -111,7 +111,9 @@ export function makeMockAPIServer() {
           }
         }
         return loginResponse(
-          credentials.userName === "user" ? UserRole.User : UserRole.Admin
+          credentials.userName === "user"
+            ? UserRole.User
+            : UserRole.Admin + "_" + credentials.userName
         );
       });
 
@@ -120,12 +122,21 @@ export function makeMockAPIServer() {
       });
 
       this.get("/user-profile", (schema, request) => {
-        const role =
-          request?.requestHeaders?.Authorization.match(/(USER|ADMIN)$/)?.[0] ||
-          "ADMIN";
-        const user = dummyUserList.users?.find((usr) => {
-          return usr.role === role;
+        const id =
+          (request?.requestHeaders?.Authorization || "").split("_")?.[1] ||
+          "sender";
+        let user = dummyUserList.users?.find((usr) => {
+          return usr.id === id;
         });
+        if (!user) {
+          const role =
+            request?.requestHeaders?.Authorization.match(
+              /(USER|ADMIN)$/
+            )?.[0] || "ADMIN";
+          user = dummyUserList.users?.find((usr) => {
+            return usr.role === role;
+          });
+        }
         return authResponse(request, user);
       });
 
@@ -354,7 +365,13 @@ export function makeMockAPIServer() {
       });
 
       this.get("/iris-messages/hd-contacts", (schema, request) => {
-        return authResponse(request, dummyIrisMessageHdContacts);
+        const includeOwn = request.queryParams.includeOwn;
+        return authResponse(
+          request,
+          dummyIrisMessageHdContacts.filter((contact) => {
+            return !(includeOwn && contact.own);
+          })
+        );
       });
 
       this.get("/iris-messages/count/unread", (schema, request) => {

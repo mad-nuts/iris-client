@@ -4,7 +4,7 @@ import { Request } from "miragejs";
 export const dummyUserList: UserList = {
   users: [
     {
-      id: "12345",
+      id: "sender",
       lastName: "Mustermann",
       firstName: "Max",
       userName: "MaxMuster",
@@ -12,7 +12,7 @@ export const dummyUserList: UserList = {
       locked: false,
     },
     {
-      id: "abcdef",
+      id: "recipient",
       lastName: "Musterfrau",
       firstName: "Lisa",
       userName: "LisaMuster",

@@ -176,7 +176,8 @@ export const routes: Array<RouteConfig> = [
     },
     component: () =>
       import(
-        /* webpackChunkName: "school-entry-exam-list" */ "../modules/school-entry-exam/views/list/school-entry-exam-list.view.vue"
+        // /* webpackChunkName: "school-entry-exam-list" */ "../modules/school-entry-exam/views/list/school-entry-exam-list.view.vue"
+        /* webpackChunkName: "school-entry-exam-list" */ "../modules/school-entry-exam/views/list/school-entry-exam-list-tab.view.vue"
       ),
   },
   {

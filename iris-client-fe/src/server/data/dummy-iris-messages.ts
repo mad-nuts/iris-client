@@ -45,7 +45,7 @@ export const dummyIrisMessageHdContacts: IrisMessageHdContact[] = [
   },
   {
     id: "4",
-    name: "GA Gunnershausen",
+    name: "GA Densburg",
   },
   {
     id: "5",
@@ -218,7 +218,7 @@ let dummyIrisMessageList: IrisMessageDetails[] = [
     isRead: false,
   },
   {
-    hdAuthor: dummyIrisMessageHdContacts[3],
+    hdAuthor: dummyIrisMessageHdContacts[4],
     hdRecipient: dummyIrisMessageHdContacts[0],
     context: IrisMessageContext.Inbox,
     folder: "inbox",
